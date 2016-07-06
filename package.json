@@ -1,0 +1,31 @@
+{
+  "name": "sqs-pull",
+  "version": "0.0.1",
+  "description": "A simple high level library used to pull messages from an Amazon SQS queue.",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "./node_module/.bin/standard",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jordanabderrachid/sqs-pull.git"
+  },
+  "keywords": [
+    "amazon",
+    "sqs",
+    "pull"
+  ],
+  "author": "Jordan Abderrachid <jabderrachid@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jordanabderrachid/sqs-pull/issues"
+  },
+  "homepage": "https://github.com/jordanabderrachid/sqs-pull#readme",
+  "devDependencies": {
+    "standard": "7.1.2"
+  },
+  "dependencies": {
+    "debug": "2.2.0"
+  }
+}
