@@ -9,9 +9,9 @@ var sqsPull = require('sqs-pull')(sqsClient)
 var queueName = 'QUEUE_NAME'
 sqsPull.pull(queueName)
 
-sqsPull.on('message', function (queueName, message, done) {
+sqsPull.on('message', function (queueName, messageBody, done) {
   console.log(queueName) // => 'QUEUE_NAME'
-  console.log(message)   // => {"foo": "bar"}
+  console.log(messageBody)   // => 'MESSAGE_BODY'
 
   // Do some work here.
 
