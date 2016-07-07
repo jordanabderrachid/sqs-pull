@@ -4,8 +4,8 @@
   "description": "A simple high level library used to pull messages from an Amazon SQS queue.",
   "main": "index.js",
   "scripts": {
-    "pretest": "./node_module/.bin/standard",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretest": "./node_modules/.bin/standard",
+    "test": "./node_modules/.bin/mocha ./test/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,8 @@
   },
   "homepage": "https://github.com/jordanabderrachid/sqs-pull#readme",
   "devDependencies": {
+    "mocha": "2.5.3",
+    "should": "9.0.2",
     "standard": "7.1.2"
   },
   "dependencies": {
