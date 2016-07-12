@@ -37,9 +37,35 @@ describe('sqs-pull', function () {
     })
   })
 
-  describe('#_receiveMessage', function () {
-    it('should receive a message', function (done) {
+  describe('#_receiveMessage long polling', function () {
+    it('should receive a message using long polling', function (done) {
       sqs._receiveMessage('QUEUE_URL', function (err, messageBody, receiptHandle) {
+        should.not.exist(err)
+
+        should.exist(messageBody)
+        messageBody.should.be.a.String
+        messageBody.should.be.exactly('MESSAGE_BODY')
+
+        should.exist(receiptHandle)
+        receiptHandle.should.be.a.String
+        receiptHandle.should.be.exactly('RECEIPT_HANDLE')
+
+        done(err)
+      })
+    })
+  })
+
+  describe('#_receiveMessage short polling', function () {
+    var sqsShort
+
+    before(function () {
+      sqsShort = SQSPull(sqsClient, {longPolling: false})
+    })
+
+    it('should receive a message using short polling', function (done) {
+      this.timeout(100) // Ensure we are using short polling
+
+      sqsShort._receiveMessage('QUEUE_URL', function (err, messageBody, receiptHandle) {
         should.not.exist(err)
 
         should.exist(messageBody)

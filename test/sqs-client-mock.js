@@ -41,17 +41,21 @@ var sqsClientMock = {
       return
     }
 
-    process.nextTick(function () {
-      var message = {
-        'Body': 'MESSAGE_BODY',
-        'MD5OfBody': 'MD5_OF_BODY',
-        'ReceiptHandle': 'RECEIPT_HANDLE'
-      }
+    var message = {
+      'Body': 'MESSAGE_BODY',
+      'MD5OfBody': 'MD5_OF_BODY',
+      'ReceiptHandle': 'RECEIPT_HANDLE'
+    }
 
-      cb(null, {
-        Messages: [message]
-      })
-    })
+    var cbValue = {
+      Messages: [message]
+    }
+
+    if (params.hasOwnProperty('WaitTimeSeconds')) {
+      setTimeout(cb.bind(null, null, cbValue), 200)
+    } else {
+      process.nextTick(cb.bind(null, null, cbValue))
+    }
   }
 }
 

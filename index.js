@@ -6,14 +6,18 @@ var util = require('util')
 var async = require('async')
 var debug = require('debug')('sqs-pull')
 
-var SQS = function (sqsClient) {
+var SQS = function (sqsClient, options) {
   if (!(this instanceof SQS)) {
-    return new SQS(sqsClient)
+    return new SQS(sqsClient, options)
   }
 
   EventEmitter.call(this)
 
   this._sqsClient = sqsClient
+
+  var opt = options || {}
+
+  this._longPolling = (opt.longPolling === false ? opt.longPolling : true)
 }
 
 util.inherits(SQS, EventEmitter)
@@ -87,9 +91,17 @@ SQS.prototype._receiveMessage = function (queueURL, cb) {
 
   // TODO: Add support of fetching several messages on the same request
   // TODO: Add support of visibility timeout parameter
+  // TODO: Add support of long polling waiting time parameter
   var params = {
     'QueueUrl': queueURL,
     'MaxNumberOfMessages': 1
+  }
+
+  if (this._longPolling) {
+    debug('using long polling (queue_url="%s")', queueURL)
+    params['WaitTimeSeconds'] = 20
+  } else {
+    debug('using short polling (queue_url="%s")', queueURL)
   }
 
   this._sqsClient.receiveMessage(params, function (err, data) {
